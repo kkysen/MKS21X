@@ -1,5 +1,21 @@
+git init
+    sets up current directory as a git repo
+
 git clone [url]
+    clones the repo at url and initializes current directory as that repo
+
 git pull
-git add
-git commit
-git push
+    checks for changes to repo online and downloads them
+
+git add [-A]
+    stages a change that can be committed later
+    -A adds all changed files
+
+git commit [-m]
+    locks in your staged changes; now ready for pushing
+    by default opens your core.editor to type in a commit message
+    -m allows you to type the message in the cli
+
+git push [remote] [branch]
+    uploads your committed changes to GitHub
+    can specify which remote and branch to use, like origin master
