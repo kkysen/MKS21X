@@ -1,29 +1,55 @@
+//package sen.khyber.apcs.library;
+
+/**
+ * a circulating book that can be checked out by a patron until a due date
+ * 
+ * @author Khyber Sen
+ */
 public class CirculatingBook extends LibraryBook {
     
-    private @Getter @Setter String currentHolder = null;
-    private @Getter @Setter String dueDate = null;
+    private String currentHolder = null;
+    private String dueDate = null;
     
-    public CirculatingBook(String title, String author, String isbn, String callNumber) {
+    public CirculatingBook(final String title, final String author, final String isbn,
+            final String callNumber) {
         super(title, author, isbn, callNumber);
     }
     
-    // FIXME
-    public void checkout() {
-        System.out.println("cannot check out a reference book");
-        // throw new Exception();
+    public String getCurrentHolder() {
+        return currentHolder;
     }
     
-    // FIXME
+    public void setCurrentHolder(String currentHolder) {
+        this.currentHolder = currentHolder;
+    }
+    
+    public String getDueDate() {
+        return dueDate;
+    }
+    
+    public void setDueDate(String dueDate) {
+        this.dueDate = dueDate;
+    }
+    
+    @Override
+    public void checkout(final String patron, final String dueDate) {
+        currentHolder = patron;
+        this.dueDate = dueDate;
+        System.out.println("Successfully checked out " + this);
+    }
+    
+    @Override
     public void returned() {
-        System.out.println("reference book could not have been checked out -- return impossible");
-        // throw new Exception();
+        currentHolder = null;
+        dueDate = null;
     }
     
-    // FIXME
+    @Override
     public String circulationStatus() {
-        return "non-circulating reference book";
+        if (currentHolder == null) {
+            return "book available on shelves";
+        }
+        return "checked out by " + currentHolder + " until " + dueDate;
     }
-    
-    // TODO eclipse generate toString
     
 }
