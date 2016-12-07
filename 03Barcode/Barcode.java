@@ -31,7 +31,7 @@ public class Barcode implements Comparable<Barcode>, Cloneable {
             if (digit < '0' || digit > '9') {
                 throw new IllegalArgumentException("zip must be all digits; found " + digit + " at index " + i);
             }
-            checkDigit += (int) digit - '0';
+            checkDigit += digit - '0';
             sb.append(ENCODING.get(digitVal));
         }
         checkDigit %= 10;
@@ -39,6 +39,7 @@ public class Barcode implements Comparable<Barcode>, Cloneable {
         zipCode = zipCode * 10 + checkDigit;
         sb.append(ENCODING.get(checkDigit));
         sb.append("|");
+        sb.insert(0, zip + checkDigit + " ");
         toString = sb.toString();
     }
     
@@ -50,6 +51,7 @@ public class Barcode implements Comparable<Barcode>, Cloneable {
         toString = other.toString;
     }
     
+    @Override
     public Barcode clone() {
         return new Barcode(this);
     }
@@ -58,10 +60,14 @@ public class Barcode implements Comparable<Barcode>, Cloneable {
         return checkDigit;
     }
     
+    @Override
     public String toString() {
         return toString;
     }
     
+    // doesn't need to compare checkDigit 
+    // because for equal zips checkDigit will also be equal
+    @Override
     public int compareTo(Barcode other) {
         return zipCode - other.zipCode;
     }
