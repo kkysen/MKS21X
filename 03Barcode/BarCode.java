@@ -14,17 +14,17 @@ public class Barcode implements Comparable<Barcode>, Cloneable {
         ENCODING.put(9, "|:|::");
     }
     
-    private String zip;
+    private final String zip;
     private int zipCode;
     private int checkDigit;
-    private String toString;
+    private final String toString;
     
     public Barcode(String zip) {
         if (zip.length() != 5) {
             throw new IllegalArgumentException("length must be 5; given: " + zip.length());
         }
         this.zip = zip;
-        zipCode = new int[zip.length];
+        checkDigit = 0;
         StringBuilder sb = new StringBuilder("|");
         for (int i = 0; i < zip.length(); i++) {
             char digit = zip.charAt(i);
@@ -42,8 +42,16 @@ public class Barcode implements Comparable<Barcode>, Cloneable {
         toString = sb.toString();
     }
     
+    // for cloning
+    private Barcode(Barcode other) {
+        zip = other.zip;
+        zipCode = other.zipCode;
+        checkDigit = other.checkDigit;
+        toString = other.toString;
+    }
+    
     public Barcode clone() {
-        return new Barcode(zip);
+        return new Barcode(this);
     }
     
     private int checkSum() {
