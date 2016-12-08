@@ -10,6 +10,9 @@ import java.util.Map;
  */
 public class Barcode implements Comparable<Barcode>, Cloneable {
     
+    private static final int ZIPCODE_LENGTH = 5;
+    private static final int BARCODE_LENGTH = 5 * (ZIPCODE_LENGTH + 1);
+    
     private static final Map<Integer, String> ENCODING = new HashMap<>(10);
     static {
         ENCODING.put(0, "||:::");
@@ -24,16 +27,42 @@ public class Barcode implements Comparable<Barcode>, Cloneable {
         ENCODING.put(9, "|:|::");
     }
     
+    public static String toCode(String zip) {
+        /*final int length = zip.length();
+        if (length != 5) {
+            throw new IllegalArgumentException("length must be 5; given: " + length);
+        }
+        final StringBuilder sb = new StringBuilder(6 * (length + 1) + 3);
+        sb.append(zip + "  |");
+        for (int i = 0; i < length; i++) {
+            final char digit = zip.charAt(i);
+            if (digit < '0' || digit > '9') {
+                throw new IllegalArgumentException(
+                        "zip must be all digits; found " + digit + " at index " + i);
+            }
+            digitSum += digit;
+            sb.append(ENCODING.get(digit - '0'));
+        }
+        digitSum -= '0' * length;
+        checkDigit = digitSum % 10;
+        zipCode = Integer.parseInt(zip);
+        sb.append(ENCODING.get(checkDigit));
+        sb.append("|");
+        sb.setCharAt(length, (char) (checkDigit + '0'));
+        return sb.toString();*/
+        return new Barcode(zip).toString;
+    }
+    
+    public static String toZip(String code) {
+        
+    }
+    
     private final String zip;
     private final int zipCode;
     private final int checkDigit;
     private final String toString;
     
-    public Barcode(final String zip) {
-        final int length = zip.length();
-        if (length != 5) {
-            throw new IllegalArgumentException("length must be 5; given: " + length);
-        }
+    private void initZip(String zip) {
         this.zip = zip;
         int digitSum = 0;
         final StringBuilder sb = new StringBuilder(6 * (length + 1) + 3);
@@ -56,17 +85,13 @@ public class Barcode implements Comparable<Barcode>, Cloneable {
         toString = sb.toString();
     }
     
-    // for cloning
-    private Barcode(final Barcode other) {
-        zip = other.zip;
-        zipCode = other.zipCode;
-        checkDigit = other.checkDigit;
-        toString = other.toString;
+    private void initCode(String code) {
+        
     }
     
-    @Override
-    public Barcode clone() {
-        return new Barcode(this);
+    public Barcode(final String zipOrCode) {
+        final int length = zipOrCode.length();
+        switch
     }
     
     public int checkSum() {
