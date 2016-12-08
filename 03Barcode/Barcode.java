@@ -1,6 +1,6 @@
 public class Barcode implements Comparable<Barcode>, Cloneable {
     
-    private static final HashMap<Integer, String> ENCODING = new HashMap<>(10);
+    private static final Map<Integer, String> ENCODING = new HashMap<>(10);
     static {
         ENCODING.put(0, "||:::");
         ENCODING.put(1, ":::||");
@@ -15,31 +15,33 @@ public class Barcode implements Comparable<Barcode>, Cloneable {
     }
     
     private final String zip;
-    private int zipCode;
-    private int checkDigit;
+    private final int zipCode;
+    private final int checkDigit;
     private final String toString;
     
     public Barcode(String zip) {
-        if (zip.length() != 5) {
-            throw new IllegalArgumentException("length must be 5; given: " + zip.length());
+        int length = zip.length();
+        if (length != 5) {
+            throw new IllegalArgumentException("length must be 5; given: " + length);
         }
         this.zip = zip;
-        checkDigit = 0;
-        StringBuilder sb = new StringBuilder("|");
-        for (int i = 0; i < zip.length(); i++) {
+        int digitSum = 0;
+        StringBuilder sb = new StringBuilder(6 * (length + 1) + 3);
+        sb.append(zip + "  |");
+        for (int i = 0; i < length; i++) {
             char digit = zip.charAt(i);
             if (digit < '0' || digit > '9') {
                 throw new IllegalArgumentException("zip must be all digits; found " + digit + " at index " + i);
             }
-            checkDigit += digit - '0';
+            digitSum += digit;
             sb.append(ENCODING.get(digitVal));
         }
-        checkDigit %= 10;
+        digitSum -= '0' * length;
+        checkDigit = digitSum % 10;
         zipCode = Integer.parseInt(zip);
-        zipCode = zipCode * 10 + checkDigit;
         sb.append(ENCODING.get(checkDigit));
         sb.append("|");
-        sb.insert(0, zip + checkDigit + " ");
+        sb.setCharAt(length, checkDigit + '0');
         toString = sb.toString();
     }
     
