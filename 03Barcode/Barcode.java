@@ -1,3 +1,13 @@
+//package sen.khyber.apcs.barcode;
+
+import java.util.HashMap;
+import java.util.Map;
+
+/**
+ * 
+ * 
+ * @author Khyber Sen
+ */
 public class Barcode implements Comparable<Barcode>, Cloneable {
     
     private static final Map<Integer, String> ENCODING = new HashMap<>(10);
@@ -19,34 +29,35 @@ public class Barcode implements Comparable<Barcode>, Cloneable {
     private final int checkDigit;
     private final String toString;
     
-    public Barcode(String zip) {
-        int length = zip.length();
+    public Barcode(final String zip) {
+        final int length = zip.length();
         if (length != 5) {
             throw new IllegalArgumentException("length must be 5; given: " + length);
         }
         this.zip = zip;
         int digitSum = 0;
-        StringBuilder sb = new StringBuilder(6 * (length + 1) + 3);
+        final StringBuilder sb = new StringBuilder(6 * (length + 1) + 3);
         sb.append(zip + "  |");
         for (int i = 0; i < length; i++) {
-            char digit = zip.charAt(i);
+            final char digit = zip.charAt(i);
             if (digit < '0' || digit > '9') {
-                throw new IllegalArgumentException("zip must be all digits; found " + digit + " at index " + i);
+                throw new IllegalArgumentException(
+                        "zip must be all digits; found " + digit + " at index " + i);
             }
             digitSum += digit;
-            sb.append(ENCODING.get(digitVal));
+            sb.append(ENCODING.get(digit - '0'));
         }
         digitSum -= '0' * length;
         checkDigit = digitSum % 10;
         zipCode = Integer.parseInt(zip);
         sb.append(ENCODING.get(checkDigit));
         sb.append("|");
-        sb.setCharAt(length, checkDigit + '0');
+        sb.setCharAt(length, (char) (checkDigit + '0'));
         toString = sb.toString();
     }
     
     // for cloning
-    private Barcode(Barcode other) {
+    private Barcode(final Barcode other) {
         zip = other.zip;
         zipCode = other.zipCode;
         checkDigit = other.checkDigit;
@@ -58,7 +69,7 @@ public class Barcode implements Comparable<Barcode>, Cloneable {
         return new Barcode(this);
     }
     
-    private int checkSum() {
+    public int checkSum() {
         return checkDigit;
     }
     
@@ -70,8 +81,8 @@ public class Barcode implements Comparable<Barcode>, Cloneable {
     // doesn't need to compare checkDigit 
     // because for equal zips checkDigit will also be equal
     @Override
-    public int compareTo(Barcode other) {
-        return zipCode - other.zipCode;
+    public int compareTo(final Barcode other) {
+        return Integer.compare(zipCode, other.zipCode);
     }
     
 }
