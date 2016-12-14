@@ -47,9 +47,7 @@ public class Sorts {
     
     private static int insertionIndex(final int[] a, final int index) {
         final int val = a[index];
-        //        System.out.println("val: " + val);
         for (int i = index - 1; i >= 0; i--) {
-            //            System.out.println("a[i]: " + a[i]);
             if (val > a[i]) {
                 return i + 1;
             }
@@ -59,8 +57,6 @@ public class Sorts {
     
     private static void insert(final int[] a, final int index) {
         final int insertionIndex = insertionIndex(a, index);
-        //        System.out.println("index: " + index);
-        //        System.out.println("insertionIndex: " + insertionIndex);
         final int val = a[index];
         System.arraycopy(a, insertionIndex, a, insertionIndex + 1, index - insertionIndex);
         a[insertionIndex] = val;
@@ -125,6 +121,30 @@ public class Sorts {
         final int[] b = Arrays.copyOfRange(a, splitIndex, a.length);
         a = Arrays.copyOfRange(a, 0, splitIndex);
         
+    }
+    
+    public static void bucketSort(int[] a, int startRange, int endRange) {
+        int len = a.length;
+        int range = startRange - endRange;
+        int[] buckets = new int[range];
+        for (int i = 0; i < len; i++) {
+            buckets[a[i] - range]++;
+        }
+        for (int i = 0, from = 0, to = 0; i < buckets.length; i++, from = to) {
+            to = buckets[i];
+            Arrays.fill(a, from, to, i + startRange);
+        }
+    }
+    
+    private static final int mask = 1;
+    
+    public static int[] logRadixSort(int[] a, int bits) {
+        if (bits == 31) return a;
+        int[][] buckets = new int[mask + 1][a.length + 1];
+        for (int i = 0; i < a.length; i++) {
+            int index = buckets[a[i] >>> bits & mask][0];
+             = a[i];
+        }
     }
     
     private static int[] warmUp() {
