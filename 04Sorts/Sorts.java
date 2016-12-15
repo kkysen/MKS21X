@@ -136,16 +136,16 @@ public class Sorts {
         }
     }
     
-    private static final int mask = 1;
-    
-    public static int[] logRadixSort(int[] a, int bits) {
-        if (bits == 31) return a;
-        int[][] buckets = new int[mask + 1][a.length + 1];
-        for (int i = 0; i < a.length; i++) {
-            int index = buckets[a[i] >>> bits & mask][0];
-             = a[i];
-        }
-    }
+//    private static final int mask = 1;
+//    
+//    public static int[] logRadixSort(int[] a, int bits) {
+//        if (bits == 31) return a;
+//        int[][] buckets = new int[mask + 1][a.length + 1];
+//        for (int i = 0; i < a.length; i++) {
+//            int index = buckets[a[i] >>> bits & mask][0];
+//             = a[i];
+//        }
+//    }
     
     private static int[] warmUp() {
         int[] a = random.ints(1_000_000).toArray();
@@ -190,7 +190,8 @@ public class Sorts {
     }
     
     public static void main(final String[] args) {
-        test(Sorts::insertionSort, Arrays::sort, 500000);
+        test(Sorts::insertionSort, Arrays::sort, 50000);
+        System.out.println("done");
         final int[] a = new int[] {3, 5, 1, 6, 8, 3, 9};
 //        insertionSort(a);
 //        print(a);
