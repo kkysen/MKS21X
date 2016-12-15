@@ -69,6 +69,25 @@ public class Sorts {
         }
     }
     
+    private static void bubbleSortPass(int[] a, int endIndex) {
+        boolean sorted = true;
+        for (int i = 1; i < endIndex; i++) {
+            if (a[i - 1] > a[i]) {
+                swap(i - 1, i);
+                sorted = false;
+            }
+        }
+        return sorted;
+    }
+    
+    public static void bubbleSort(int[] a) {
+        for (int i = a.length; i >= 2; i--) {
+            if (bubbleSortPass(a, i)) {
+                break;
+            }
+        }
+    }
+    
     private static void quickSort(final int[] a, final int left, final int right) {
         int i = left, j = right;
         final int pivot = a[(i + j) / 2];
