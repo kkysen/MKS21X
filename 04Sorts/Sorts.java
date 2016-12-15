@@ -71,8 +71,9 @@ public class Sorts {
     
     private static void bubbleSortPass(int[] a, int endIndex) {
         boolean sorted = true;
+        int prev = a[0];
         for (int i = 1; i < endIndex; i++) {
-            if (a[i - 1] > a[i]) {
+            if (prev > (prev = a[i])) {
                 swap(i - 1, i);
                 sorted = false;
             }
@@ -139,7 +140,7 @@ public class Sorts {
         final int splitIndex = a.length / 2;
         final int[] b = Arrays.copyOfRange(a, splitIndex, a.length);
         a = Arrays.copyOfRange(a, 0, splitIndex);
-        
+        // FIXME
     }
     
     public static void bucketSort(int[] a, int startRange, int endRange) {
@@ -155,16 +156,30 @@ public class Sorts {
         }
     }
     
-//    private static final int mask = 1;
-//    
-//    public static int[] logRadixSort(int[] a, int bits) {
-//        if (bits == 31) return a;
-//        int[][] buckets = new int[mask + 1][a.length + 1];
-//        for (int i = 0; i < a.length; i++) {
-//            int index = buckets[a[i] >>> bits & mask][0];
-//             = a[i];
-//        }
-//    }
+    private static final int mask = 1;
+    
+    private static int[] radixSort(int[] a, int bits) {
+        if (bits == 31) return a;
+        int[][] buckets = new int[mask + 1][a.length + 1];
+        for (int i = 0; i < a.length; i++) {
+            int n = a[i];
+            int whichBucket = n >>> bits & mask;
+            int index = buckets[whichBucket][0];
+            buckets[whichBucket][index] = n;
+        }
+        int[] sorted = new int[a.length];
+        int index = 0;
+        for (int[] bucket : buckets) {
+            int len = bucket.length - 1;
+            System.arraycopy(sorted, index, radixSort(bucket, ++bits), 1, len);
+            index += len;
+        }
+        return sorted;
+    }
+    
+    public static int[] radixSort(int[] a) {
+        return radixSort(a, 0);
+    }
     
     private static int[] warmUp() {
         int[] a = random.ints(1_000_000).toArray();
