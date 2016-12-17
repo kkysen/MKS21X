@@ -45,6 +45,21 @@ public class Sorts {
         }
     }
     
+    public static void selectionSortInlined(int[] a) {
+        int temp;
+        for (int i = 0; i < a.length - 1; i++) {
+            int minIndex = i;
+            for (int j = i; j < a.length; j++) {
+                if (a[i] < a[minIndex]) {
+                    minIndex = i;
+                }
+            }
+            temp = a[i];
+            a[i] = a[minIndex];
+            a[minIndex] = temp;
+        }
+    }
+    
     private static int insertionIndex(final int[] a, final int index) {
         final int val = a[index];
         for (int i = index - 1; i >= 0; i--) {
@@ -66,6 +81,18 @@ public class Sorts {
         final int len = a.length;
         for (int i = 1; i < len; i++) {
             insert(a, i);
+        }
+    }
+    
+    public static void insertionSortInlined(int[] a) {
+        for (int i = 1; i < a.length; i++) {
+            int prev = a[i];
+            int index = i;
+            while (index > 0 && prev < a[index - 1]) {
+                a[i] = a[i - 1];
+                i--;
+            }
+            a[index] = prev;
         }
     }
     
