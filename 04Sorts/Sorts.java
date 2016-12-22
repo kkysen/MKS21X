@@ -37,6 +37,9 @@ public class Sorts {
     }
     
     public static void selectionSort(final int[] a) {
+        if (a == null) {
+            throw new NullPointerException();
+        }
         final int len = a.length;
         for (int i = 0; i < len; i++) {
             swap(a, i, minIndex(a, i, len));
@@ -147,6 +150,9 @@ public class Sorts {
     }
     
     public static void insertionSort(final int[] a) {
+        if (a == null) {
+            throw new NullPointerException();
+        }
         final int len = a.length;
         final boolean evenLen = (len & 1) == 0;
         int startIndex = 1;
@@ -189,6 +195,9 @@ public class Sorts {
     }
     
     public static void bubbleSort(final int[] a) {
+        if (a == null) {
+            throw new NullPointerException();
+        }
         for (int i = a.length; i >= 2; i--) {
             if (bubbleSortPass(a, i)) {
                 break;
@@ -222,6 +231,9 @@ public class Sorts {
     }
     
     public static void quickSort(final int[] a) {
+        if (a == null) {
+            throw new NullPointerException();
+        }
         quickSort(a, 0, a.length - 1);
     }
     
