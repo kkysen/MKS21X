@@ -40,6 +40,9 @@ public class Sorts {
         if (a == null) {
             throw new NullPointerException();
         }
+        if (a.length == 1) {
+            return;
+        }
         final int len = a.length;
         for (int i = 0; i < len; i++) {
             swap(a, i, minIndex(a, i, len));
@@ -153,6 +156,9 @@ public class Sorts {
         if (a == null) {
             throw new NullPointerException();
         }
+        if (a.length == 0 || a.length == 1) {
+            return;
+        }
         final int len = a.length;
         final boolean evenLen = (len & 1) == 0;
         int startIndex = 1;
@@ -233,6 +239,9 @@ public class Sorts {
     public static void quickSort(final int[] a) {
         if (a == null) {
             throw new NullPointerException();
+        }
+        if (a.length == 0 || a.length == 1) {
+            return;
         }
         quickSort(a, 0, a.length - 1);
     }
