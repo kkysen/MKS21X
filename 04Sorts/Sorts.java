@@ -2,7 +2,7 @@
 
 import java.util.Arrays;
 import java.util.Random;
-import java.util.function.Consumer;
+//import java.util.function.Consumer;
 
 /**
  * 
@@ -225,7 +225,7 @@ public class Sorts {
         quickSort(a, 0, a.length - 1);
     }
     
-    private static int[] mergeSort(final int[] a, final int[] b) {
+    /*private static int[] mergeSort(final int[] a, final int[] b) {
         final int[] merged = new int[a.length + b.length];
         int i = 0;
         int j = 0;
@@ -247,7 +247,7 @@ public class Sorts {
         final int splitIndex = a.length / 2;
         final int[] b = Arrays.copyOfRange(a, splitIndex, a.length);
         a = Arrays.copyOfRange(a, 0, splitIndex);
-        // FIXME
+*/        // FIXME
         //      /** To be removed in a future release. */
         //    private static void legacyMergeSort(final Object[] a,
         //                                        final int fromIndex, final int toIndex) {
@@ -314,7 +314,7 @@ public class Sorts {
         //            }
         //        }
         //    }
-    }
+    /*}
     
     public static void bucketSort(final int[] a, final int startRange, final int endRange) {
         final int len = a.length;
@@ -443,6 +443,6 @@ public class Sorts {
         //        test();
         testSort(Sorts::bubbleSort, 20000);
         System.out.println("done");
-    }
+    }*/
     
 }
